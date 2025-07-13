@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/ba890948d9.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="image-container">
+        <div class="music-box">
+            <nav>
+                <div class="arrow"><i class="fa-solid fa-arrow-left"></i></div>
+                <div class="arrow"><i class="fa-solid fa-bars"></i></div>
+            </nav>
+            <div class="img">
+                <img src="/image1.jpeg">
+            </div>
+            <h1>Mortals</h1>
+            <p>Wariyo (ft. Laura Brehm)</p>
+            <audio controls id="song">
+                <source src="/youtube-video-jtft-tednea-128-ytshorts.savetube.me.mp3" type="audio/mpeg">
+            </audio>
+            <input type="range" id="audio-range">
+            <div class="controls">
+                <i class="fa-solid fa-backward"></i>
+                <i class="fa-solid fa-play" id="play" onclick="startSong()" ></i>
+                <i class="fa-solid fa-forward"></i>
+            </div>
+        </div>
+        </div>
+    </div>
+<script>
+    let range = document.getElementById("audio-range");
+    let song = document.getElementById("song");
+    let cntrl = document.getElementById("play");
+    let img = document.querySelector('img');
+
+    song.onloadedmetadata = () => {
+        range.max = song.duration;
+        range.value = song.currentTime;
+    }
+
+    function startSong() {
+        if(cntrl.classList.contains("fa-pause")){
+            song.pause();
+            cntrl.classList.remove("fa-pause");
+            cntrl.classList.add("fa-play");
+            img.classList.remove("rotate");
+        }
+        else{
+            song.play();
+            cntrl.classList.add("fa-pause");
+            cntrl.classList.remove("fa-play");
+            img.classList.add("rotate");
+        }
+    }
+    if(song.play()){
+        setInterval(() => {
+            range.value = song.currentTime;
+        },500);
+    }
+    range.onchange = () => {
+        song.play();
+        song.currentTime = range.value;
+        cntrl.classList.add("fa-pause");
+        cntrl.classList.remove("fa-play");
+    }
+
+</script>
+</body>
+</html>
